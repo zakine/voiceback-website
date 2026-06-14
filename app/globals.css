@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   VOICEBACK — Design Tokens
+   Deep WhatsApp-green accent · dark-mode-first · glass foundation
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  /* ─── BRAND GREEN ─── */
+  --vb-primary: #25D366;
+  --vb-primary-strong: #1DAE5A;
+  --vb-primary-hover: #199C50;
+  --vb-primary-active: #15823f;
+  --vb-primary-soft: rgba(37, 211, 102, 0.14);
+  --vb-primary-faint: rgba(37, 211, 102, 0.08);
+
+  /* ─── SEMANTIC ─── */
+  --vb-success: #25D366;
+  --vb-warning: #F5A524;
+  --vb-danger: #F0483B;
+  --vb-info: #38A3F5;
+
+  /* ─── BACKGROUNDS (charcoal w/ faint green cast) ─── */
+  --vb-bg: #0A0F0D;
+  --vb-bg-deep: #060908;
+  --vb-surface: #121A17;
+  --vb-surface-2: #1A2521;
+  --vb-surface-3: #233029;
+
+  /* ─── GLASS ─── */
+  --vb-glass: rgba(255, 255, 255, 0.045);
+  --vb-glass-strong: rgba(255, 255, 255, 0.075);
+
+  /* ─── BORDERS ─── */
+  --vb-border: rgba(255, 255, 255, 0.075);
+  --vb-border-strong: rgba(255, 255, 255, 0.14);
+  --vb-separator: rgba(255, 255, 255, 0.06);
+
+  /* ─── TEXT ─── */
+  --vb-text: #E9EFEC;
+  --vb-text-2: #8C9D96;
+  --vb-text-3: #5C6B65;
+  --vb-text-on: #FFFFFF;
+
+  /* ─── RADII ─── */
+  --vb-r-sm: 8px;
+  --vb-r-md: 12px;
+  --vb-r-lg: 18px;
+  --vb-r-xl: 26px;
+
+  /* ─── MOTION ─── */
+  --vb-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --vb-font: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html, body {
+  margin: 0;
+  background: var(--vb-bg-deep);
+  color: var(--vb-text);
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--vb-font);
+  overflow-x: hidden;
+}
+
+body {
+  background:
+    radial-gradient(900px 600px at 80% -5%, rgba(37,211,102,0.12), transparent 60%),
+    radial-gradient(700px 500px at -10% 30%, rgba(37,211,102,0.06), transparent 55%),
+    var(--vb-bg-deep);
+}
+
+::selection {
+  background: rgba(37,211,102,0.3);
+}
