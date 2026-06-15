@@ -28,7 +28,7 @@ export async function GET() {
   } catch (error) {
     return NextResponse.json({
       success: false,
-      error: error.message || 'Erreur inconnue'
+      error: error instanceof Error ? error.message : 'Erreur inconnue'
     }, { status: 500 })
   }
 }
