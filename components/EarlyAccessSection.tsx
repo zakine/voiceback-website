@@ -8,6 +8,7 @@ const EarlyAccessSection: React.FC = () => {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
   const [spotsData, setSpotsData] = useState({
     spotsLeft: 47,
     totalSpots: 100,
@@ -51,7 +52,12 @@ const EarlyAccessSection: React.FC = () => {
       ],
       successTitle: '¡Genial! Tu lugar está reservado',
       successMessage: 'Te contactaremos cuando esté listo el early access.',
-      disclaimer: 'Sin spam. Solo te contactamos cuando esté listo. ✌️'
+      disclaimer: 'Sin spam. Solo te contactamos cuando esté listo. ✌️',
+      errorMessages: {
+        alreadyRegistered: 'Este email ya está inscrito',
+        networkError: 'Error de conexión. Inténtalo de nuevo.',
+        serverError: 'Error del servidor. Inténtalo más tarde.'
+      }
     },
     en: {
       badge: '🚀 PREVIEW ACCESS',
@@ -69,7 +75,12 @@ const EarlyAccessSection: React.FC = () => {
       ],
       successTitle: 'Great! Your spot is reserved',
       successMessage: 'We\'ll contact you when early access is ready.',
-      disclaimer: 'No spam. We only contact you when it\'s ready. ✌️'
+      disclaimer: 'No spam. We only contact you when it\'s ready. ✌️',
+      errorMessages: {
+        alreadyRegistered: 'This email is already registered',
+        networkError: 'Connection error. Please try again.',
+        serverError: 'Server error. Please try later.'
+      }
     },
     pt: {
       badge: '🚀 PREVIEW ACCESS',
@@ -87,7 +98,12 @@ const EarlyAccessSection: React.FC = () => {
       ],
       successTitle: 'Ótimo! Sua vaga está reservada',
       successMessage: 'Entraremos em contato quando o early access estiver pronto.',
-      disclaimer: 'Sem spam. Só entramos em contato quando estiver pronto. ✌️'
+      disclaimer: 'Sem spam. Só entramos em contato quando estiver pronto. ✌️',
+      errorMessages: {
+        alreadyRegistered: 'Este email já está inscrito',
+        networkError: 'Erro de conexão. Tente novamente.',
+        serverError: 'Erro do servidor. Tente mais tarde.'
+      }
     }
   };
 
@@ -100,6 +116,7 @@ const EarlyAccessSection: React.FC = () => {
     setIsSubmitting(true);
 
     try {
+      setError(''); // Reset error
       const response = await fetch('/api/early-access', {
         method: 'POST',
         headers: {
@@ -116,20 +133,27 @@ const EarlyAccessSection: React.FC = () => {
       if (response.ok) {
         setSubmitted(true);
         setEmail('');
-        // Mettre à jour le compteur après inscription
-        setSpotsData(prev => ({
-          ...prev,
-          spotsLeft: Math.max(0, prev.spotsLeft - 1)
-        }));
+        // Recharger le compteur depuis l'API pour avoir la vraie valeur
+        const countResponse = await fetch('/api/early-access/count');
+        const countData = await countResponse.json();
+        setSpotsData({
+          spotsLeft: countData.spotsLeft,
+          totalSpots: countData.total,
+          loading: false
+        });
       } else {
         console.error('Erreur inscription:', result.error);
-        const errorMsg = result.error || `Erreur ${response.status}: ${response.statusText}`;
-        alert(`❌ ${errorMsg}\n\nVérifiez que Supabase est configuré dans Vercel.`);
+        // Messages d'erreur traduits
+        if (response.status === 409) {
+          setError(t.errorMessages.alreadyRegistered);
+        } else {
+          setError(t.errorMessages.serverError);
+        }
       }
 
     } catch (error) {
       console.error('Erreur réseau:', error);
-      alert('Erreur de connexion. Veuillez réessayer.');
+      setError(t.errorMessages.networkError);
     } finally {
       setIsSubmitting(false);
     }
@@ -216,6 +240,13 @@ const EarlyAccessSection: React.FC = () => {
                   {isSubmitting ? '...' : t.ctaButton}
                 </button>
               </form>
+
+              {/* Message d'erreur */}
+              {error && (
+                <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+                  <p className="text-sm text-red-400">❌ {error}</p>
+                </div>
+              )}
 
               <p className="text-xs text-text-3 mt-4">
                 {t.disclaimer}
