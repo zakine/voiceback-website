@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
 
 const EarlyAccessSection: React.FC = () => {
@@ -8,10 +8,31 @@ const EarlyAccessSection: React.FC = () => {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [spotsData, setSpotsData] = useState({
+    spotsLeft: 47,
+    totalSpots: 100,
+    loading: true
+  });
 
-  // Simulation compteur (à remplacer par une vraie API)
-  const spotsLeft = 47;
-  const totalSpots = 100;
+  // Charger le compteur réel depuis Supabase
+  useEffect(() => {
+    const fetchCount = async () => {
+      try {
+        const response = await fetch('/api/early-access/count');
+        const data = await response.json();
+        setSpotsData({
+          spotsLeft: data.spotsLeft,
+          totalSpots: data.total,
+          loading: false
+        });
+      } catch (error) {
+        console.error('Erreur chargement compteur:', error);
+        setSpotsData(prev => ({ ...prev, loading: false }));
+      }
+    };
+
+    fetchCount();
+  }, []);
 
   const content = {
     es: {
@@ -95,6 +116,11 @@ const EarlyAccessSection: React.FC = () => {
       if (response.ok) {
         setSubmitted(true);
         setEmail('');
+        // Mettre à jour le compteur après inscription
+        setSpotsData(prev => ({
+          ...prev,
+          spotsLeft: Math.max(0, prev.spotsLeft - 1)
+        }));
       } else {
         console.error('Erreur inscription:', result.error);
         // Tu peux ajouter un état pour afficher l'erreur à l'utilisateur
@@ -156,8 +182,10 @@ const EarlyAccessSection: React.FC = () => {
                 <div className="flex items-center gap-2 px-4 py-2 bg-glass border border-border rounded-full">
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                   <span className="text-text-2 text-sm">{t.spotsText}</span>
-                  <span className="text-primary font-bold text-lg">{spotsLeft}</span>
-                  <span className="text-text-2 text-sm">/{totalSpots} {t.spotsLeft}</span>
+                  <span className="text-primary font-bold text-lg">
+                    {spotsData.loading ? '...' : spotsData.spotsLeft}
+                  </span>
+                  <span className="text-text-2 text-sm">/{spotsData.totalSpots} {t.spotsLeft}</span>
                 </div>
               </div>
 
@@ -183,7 +211,7 @@ const EarlyAccessSection: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting || !email}
-                  className="h-12 px-6 rounded-xl bg-primary text-[#0a2013] font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-vb-primary disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shadow-lg"
+                  className="h-12 px-6 rounded-xl bg-primary text-black font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-vb-primary disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shadow-lg border border-black/20"
                 >
                   {isSubmitting ? '...' : t.ctaButton}
                 </button>
