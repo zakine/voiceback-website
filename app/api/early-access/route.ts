@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-function getEmailContent(language: string) {
+function getEmailContent(language: 'es' | 'en' | 'pt') {
   const content = {
     es: {
       subject: '🚀 ¡Bienvenido al early access de Voiceback!',
@@ -123,5 +123,5 @@ function getEmailContent(language: string) {
     }
   }
 
-  return content[language] || content.en
+  return content[language as keyof typeof content] || content.en
 }

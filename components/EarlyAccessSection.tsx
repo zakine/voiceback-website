@@ -29,7 +29,8 @@ const EarlyAccessSection: React.FC = () => {
         '📞 Tu número profesional antes que nadie'
       ],
       successTitle: '¡Genial! Tu lugar está reservado',
-      successMessage: 'Te contactaremos cuando esté listo el early access.'
+      successMessage: 'Te contactaremos cuando esté listo el early access.',
+      disclaimer: 'Sin spam. Solo te contactamos cuando esté listo. ✌️'
     },
     en: {
       badge: '🚀 PREVIEW ACCESS',
@@ -46,7 +47,8 @@ const EarlyAccessSection: React.FC = () => {
         '📞 Your professional number before everyone'
       ],
       successTitle: 'Great! Your spot is reserved',
-      successMessage: 'We\'ll contact you when early access is ready.'
+      successMessage: 'We\'ll contact you when early access is ready.',
+      disclaimer: 'No spam. We only contact you when it\'s ready. ✌️'
     },
     pt: {
       badge: '🚀 PREVIEW ACCESS',
@@ -63,7 +65,8 @@ const EarlyAccessSection: React.FC = () => {
         '📞 Seu número profissional antes de todos'
       ],
       successTitle: 'Ótimo! Sua vaga está reservada',
-      successMessage: 'Entraremos em contato quando o early access estiver pronto.'
+      successMessage: 'Entraremos em contato quando o early access estiver pronto.',
+      disclaimer: 'Sem spam. Só entramos em contato quando estiver pronto. ✌️'
     }
   };
 
@@ -180,14 +183,14 @@ const EarlyAccessSection: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting || !email}
-                  className="h-12 px-6 rounded-xl bg-primary text-[#062b15] font-semibold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-vb-primary disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                  className="h-12 px-6 rounded-xl bg-primary text-[#0a2013] font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-vb-primary disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shadow-lg"
                 >
                   {isSubmitting ? '...' : t.ctaButton}
                 </button>
               </form>
 
               <p className="text-xs text-text-3 mt-4">
-                Sin spam. Solo te contactamos cuando esté listo. ✌️
+                {t.disclaimer}
               </p>
             </div>
           </div>
