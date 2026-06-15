@@ -123,8 +123,8 @@ const EarlyAccessSection: React.FC = () => {
         }));
       } else {
         console.error('Erreur inscription:', result.error);
-        // Tu peux ajouter un état pour afficher l'erreur à l'utilisateur
-        alert(result.error || 'Erreur lors de l\'inscription');
+        const errorMsg = result.error || `Erreur ${response.status}: ${response.statusText}`;
+        alert(`❌ ${errorMsg}\n\nVérifiez que Supabase est configuré dans Vercel.`);
       }
 
     } catch (error) {
@@ -211,7 +211,7 @@ const EarlyAccessSection: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting || !email}
-                  className="h-12 px-6 rounded-xl bg-primary text-black font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-vb-primary disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shadow-lg border border-black/20"
+                  className="h-12 px-6 rounded-xl bg-white text-black font-bold transition-all duration-150 hover:bg-gray-100 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shadow-lg border-2 border-gray-300"
                 >
                   {isSubmitting ? '...' : t.ctaButton}
                 </button>

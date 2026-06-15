@@ -6,6 +6,14 @@ const resend = new Resend(process.env.RESEND_API_KEY!)
 
 export async function POST(request: NextRequest) {
   try {
+    // Vérifier que les variables d'environnement sont configurées
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      return NextResponse.json(
+        { error: 'Variables Supabase non configurées dans Vercel' },
+        { status: 500 }
+      )
+    }
+
     const { email, language } = await request.json()
 
     // Validation
