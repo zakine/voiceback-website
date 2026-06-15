@@ -4,6 +4,7 @@ import TrustStrip from '@/components/TrustStrip';
 import FeaturesSection from '@/components/FeaturesSection';
 import HowItWorksSection from '@/components/HowItWorksSection';
 import ToolsSection from '@/components/ToolsSection';
+import EarlyAccessSection from '@/components/EarlyAccessSection';
 import PricingSection from '@/components/PricingSection';
 import DownloadCTA from '@/components/DownloadCTA';
 import Footer from '@/components/Footer';
@@ -24,6 +25,7 @@ export default function Home() {
         <FeaturesSection />
         <HowItWorksSection />
         <ToolsSection />
+        <EarlyAccessSection />
         <PricingSection />
         <DownloadCTA />
       </main>
