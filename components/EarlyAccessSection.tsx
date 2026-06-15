@@ -75,17 +75,32 @@ const EarlyAccessSection: React.FC = () => {
 
     setIsSubmitting(true);
 
-    // Simuler l'envoi (à remplacer par une vraie API)
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setSubmitted(true);
-      setEmail('');
+      const response = await fetch('/api/early-access', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          language
+        })
+      });
 
-      // Ici tu intégrerais avec Mailchimp, ConvertKit, etc.
-      console.log('Email à sauvegarder:', email);
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmitted(true);
+        setEmail('');
+      } else {
+        console.error('Erreur inscription:', result.error);
+        // Tu peux ajouter un état pour afficher l'erreur à l'utilisateur
+        alert(result.error || 'Erreur lors de l\'inscription');
+      }
 
     } catch (error) {
-      console.error('Erreur:', error);
+      console.error('Erreur réseau:', error);
+      alert('Erreur de connexion. Veuillez réessayer.');
     } finally {
       setIsSubmitting(false);
     }
