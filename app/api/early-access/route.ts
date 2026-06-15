@@ -38,6 +38,15 @@ export async function POST(request: NextRequest) {
       .eq('email', email)
       .single()
 
+    // Ignorer l'erreur PGRST116 qui signifie "aucun résultat trouvé" (c'est normal)
+    if (checkError && checkError.code !== 'PGRST116') {
+      console.error('Erreur check email:', checkError)
+      return NextResponse.json(
+        { error: `Erreur vérification email: ${checkError.message}` },
+        { status: 500 }
+      )
+    }
+
     if (existingUser) {
       return NextResponse.json(
         { error: 'Cet email est déjà inscrit' },
@@ -58,26 +67,33 @@ export async function POST(request: NextRequest) {
       .select()
 
     if (insertError) {
-      console.error('Erreur Supabase:', insertError)
+      console.error('Erreur Supabase insertion:', insertError)
       return NextResponse.json(
-        { error: 'Erreur lors de l\'inscription' },
+        { error: `Erreur Supabase: ${insertError.message}` },
         { status: 500 }
       )
     }
 
-    // Envoyer email de confirmation via Resend
-    const emailContent = getEmailContent(language)
+    console.log('✅ Inscription réussie dans Supabase pour:', email)
 
-    try {
-      await resend.emails.send({
-        from: 'Voiceback <hello@voiceback.io>',
-        to: [email],
-        subject: emailContent.subject,
-        html: emailContent.html
-      })
-    } catch (emailError) {
-      console.error('Erreur Resend:', emailError)
-      // On continue même si l'email échoue, l'inscription est enregistrée
+    // Envoyer email de confirmation via Resend
+    if (process.env.RESEND_API_KEY) {
+      const emailContent = getEmailContent(language)
+
+      try {
+        const emailResult = await resend.emails.send({
+          from: 'Voiceback <hello@voiceback.io>',
+          to: [email],
+          subject: emailContent.subject,
+          html: emailContent.html
+        })
+        console.log('✅ Email envoyé via Resend:', emailResult.data?.id)
+      } catch (emailError) {
+        console.error('❌ Erreur Resend:', emailError)
+        // On continue même si l'email échoue, l'inscription est enregistrée
+      }
+    } else {
+      console.log('⚠️ RESEND_API_KEY manquante, email non envoyé')
     }
 
     return NextResponse.json({
