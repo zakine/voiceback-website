@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
 
       try {
         const emailResult = await resend.emails.send({
-          from: 'Voiceback <hello@voiceback.io>',
+          from: 'Voiceback <hello@voiceback.app>',
           to: [email],
           subject: emailContent.subject,
           html: emailContent.html
