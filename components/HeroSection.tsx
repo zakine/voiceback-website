@@ -103,7 +103,7 @@ const HeroSection: React.FC = () => {
               <div>
                 <div className="text-primary text-sm tracking-[2px] mb-0">★★★★★</div>
                 <div className="text-[13px] text-text-2 leading-[1.4]">
-                  <b className="text-text">+2.400 negocios</b> <span>{t.social_txt}</span>
+                  <b className="text-text">+100 negocios</b> <span>{t.social_txt}</span>
                 </div>
               </div>
             </div>
