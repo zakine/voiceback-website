@@ -114,6 +114,14 @@ export interface Translations {
   cmp_partial: string;
   cmp_no: string;
 
+  // Beta CTA
+  beta_label: string;
+  beta_h: string;
+  beta_sub: string;
+  beta_cta: string;
+  beta_wa_msg: string;
+  beta_note: string;
+
   // Phone
   tab_chats: string;
   tab_calls: string;
@@ -228,6 +236,13 @@ export const translations: Record<Language, Translations> = {
     cmp_f8: 'Stories para promociones',
     cmp_f9: 'Tu mismo número de siempre',
 
+    beta_label: 'Beta abierta',
+    beta_h: 'Prueba Voiceback gratis',
+    beta_sub: 'Estamos en beta. Escríbenos por WhatsApp y te enviamos el link de descarga directamente.',
+    beta_cta: 'Unirse a la beta por WhatsApp',
+    beta_wa_msg: 'Hola, quiero probar Voiceback beta',
+    beta_note: 'Gratis durante la beta · Android disponible ahora · iOS próximamente',
+
     tab_chats: 'Chats',
     tab_calls: 'Llamadas',
     tab_contacts: 'Contactos',
@@ -340,6 +355,13 @@ export const translations: Record<Language, Translations> = {
     cmp_f8: 'Stories for promotions',
     cmp_f9: 'Keep your existing number',
 
+    beta_label: 'Open beta',
+    beta_h: 'Try Voiceback for free',
+    beta_sub: 'We\'re in beta. Message us on WhatsApp and we\'ll send you the download link directly.',
+    beta_cta: 'Join the beta on WhatsApp',
+    beta_wa_msg: 'Hi, I want to try Voiceback beta',
+    beta_note: 'Free during beta · Android available now · iOS coming soon',
+
     tab_chats: 'Chats',
     tab_calls: 'Calls',
     tab_contacts: 'Contacts',
@@ -451,6 +473,13 @@ export const translations: Record<Language, Translations> = {
     cmp_f7: 'Transmissão para contatos',
     cmp_f8: 'Stories para promoções',
     cmp_f9: 'Mesmo número de sempre',
+
+    beta_label: 'Beta aberta',
+    beta_h: 'Experimente a Voiceback de graça',
+    beta_sub: 'Estamos em beta. Mande uma mensagem pelo WhatsApp e enviamos o link de download direto.',
+    beta_cta: 'Entrar na beta pelo WhatsApp',
+    beta_wa_msg: 'Olá, quero testar a Voiceback beta',
+    beta_note: 'Grátis durante a beta · Android disponível agora · iOS em breve',
 
     tab_chats: 'Conversas',
     tab_calls: 'Chamadas',

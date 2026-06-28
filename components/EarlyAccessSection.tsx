@@ -1,259 +1,43 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
 
 const EarlyAccessSection: React.FC = () => {
-  const { language } = useLanguage();
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
-  const [spotsData, setSpotsData] = useState({
-    spotsLeft: 47,
-    totalSpots: 100,
-    loading: true
-  });
-
-  // Charger le compteur réel depuis Supabase
-  useEffect(() => {
-    const fetchCount = async () => {
-      try {
-        const response = await fetch('/api/early-access/count');
-        const data = await response.json();
-        setSpotsData({
-          spotsLeft: data.spotsLeft,
-          totalSpots: data.total,
-          loading: false
-        });
-      } catch (error) {
-        console.error('Erreur chargement compteur:', error);
-        setSpotsData(prev => ({ ...prev, loading: false }));
-      }
-    };
-
-    fetchCount();
-  }, []);
-
-  const content = {
-    es: {
-      badge: '🚀 PREVIEW ACCESS',
-      title: 'Sé de los primeros en usar Voiceback',
-      subtitle: 'Inscríbete ahora y obtén 1 año GRATIS cuando lancemos',
-      spotsText: 'Quedan solo',
-      spotsLeft: 'lugares',
-      emailPlaceholder: 'tu@email.com',
-      ctaButton: 'Reservar mi lugar gratis',
-      benefits: [
-        '✨ Acceso anticipado a la app',
-        '🎁 1 año de plan Pro completamente gratis',
-        '🏆 Status de miembro fundador',
-        '📞 Tu número profesional antes que nadie'
-      ],
-      successTitle: '¡Genial! Tu lugar está reservado',
-      successMessage: 'Te contactaremos cuando esté listo el early access.',
-      disclaimer: 'Sin spam. Solo te contactamos cuando esté listo. ✌️',
-      errorMessages: {
-        alreadyRegistered: 'Este email ya está inscrito',
-        networkError: 'Error de conexión. Inténtalo de nuevo.',
-        serverError: 'Error del servidor. Inténtalo más tarde.'
-      }
-    },
-    en: {
-      badge: '🚀 PREVIEW ACCESS',
-      title: 'Be among the first to use Voiceback',
-      subtitle: 'Sign up now and get 1 year FREE when we launch',
-      spotsText: 'Only',
-      spotsLeft: 'spots left',
-      emailPlaceholder: 'your@email.com',
-      ctaButton: 'Reserve my free spot',
-      benefits: [
-        '✨ Early access to the app',
-        '🎁 1 year of Pro plan completely free',
-        '🏆 Founding member status',
-        '📞 Your professional number before everyone'
-      ],
-      successTitle: 'Great! Your spot is reserved',
-      successMessage: 'We\'ll contact you when early access is ready.',
-      disclaimer: 'No spam. We only contact you when it\'s ready. ✌️',
-      errorMessages: {
-        alreadyRegistered: 'This email is already registered',
-        networkError: 'Connection error. Please try again.',
-        serverError: 'Server error. Please try later.'
-      }
-    },
-    pt: {
-      badge: '🚀 PREVIEW ACCESS',
-      title: 'Seja um dos primeiros a usar a Voiceback',
-      subtitle: 'Cadastre-se agora e ganhe 1 ano GRÁTIS quando lançarmos',
-      spotsText: 'Restam apenas',
-      spotsLeft: 'vagas',
-      emailPlaceholder: 'seu@email.com',
-      ctaButton: 'Reservar minha vaga grátis',
-      benefits: [
-        '✨ Acesso antecipado ao app',
-        '🎁 1 ano do plano Pro completamente grátis',
-        '🏆 Status de membro fundador',
-        '📞 Seu número profissional antes de todos'
-      ],
-      successTitle: 'Ótimo! Sua vaga está reservada',
-      successMessage: 'Entraremos em contato quando o early access estiver pronto.',
-      disclaimer: 'Sem spam. Só entramos em contato quando estiver pronto. ✌️',
-      errorMessages: {
-        alreadyRegistered: 'Este email já está inscrito',
-        networkError: 'Erro de conexão. Tente novamente.',
-        serverError: 'Erro do servidor. Tente mais tarde.'
-      }
-    }
-  };
-
-  const t = content[language];
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || isSubmitting) return;
-
-    setIsSubmitting(true);
-
-    try {
-      setError(''); // Reset error
-      const response = await fetch('/api/early-access', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          language
-        })
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        setSubmitted(true);
-        setEmail('');
-        // Recharger le compteur depuis l'API pour avoir la vraie valeur
-        const countResponse = await fetch('/api/early-access/count');
-        const countData = await countResponse.json();
-        setSpotsData({
-          spotsLeft: countData.spotsLeft,
-          totalSpots: countData.total,
-          loading: false
-        });
-      } else {
-        console.error('Erreur inscription:', result.error);
-        // Messages d'erreur traduits
-        if (response.status === 409) {
-          setError(t.errorMessages.alreadyRegistered);
-        } else {
-          setError(t.errorMessages.serverError);
-        }
-      }
-
-    } catch (error) {
-      console.error('Erreur réseau:', error);
-      setError(t.errorMessages.networkError);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  if (submitted) {
-    return (
-      <section className="py-16 lg:py-20 relative z-10">
-        <div className="max-w-[1120px] mx-auto px-6">
-          <div className="text-center py-16 px-8 rounded-vb-xl bg-gradient-to-br from-[rgba(37,211,102,0.14)] to-[rgba(20,77,55,0.18)] border border-[rgba(37,211,102,0.3)] relative overflow-hidden">
-            <div className="absolute w-[300px] h-[300px] rounded-full bg-[radial-gradient(circle,rgba(37,211,102,0.25),transparent_70%)] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-60 pointer-events-none" />
-
-            <div className="relative z-10">
-              <div className="text-6xl mb-6">🎉</div>
-              <h2 className="text-3xl font-bold text-text mb-4">{t.successTitle}</h2>
-              <p className="text-lg text-text-2">{t.successMessage}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const { t } = useLanguage();
 
   return (
-    <section className="py-16 lg:py-20 relative z-10">
-      <div className="max-w-[1120px] mx-auto px-6">
-        <div className="relative py-12 px-8 lg:py-16 lg:px-12 rounded-vb-xl bg-gradient-to-br from-[rgba(37,211,102,0.12)] to-[rgba(20,77,55,0.15)] border border-[rgba(37,211,102,0.3)] overflow-hidden">
-          {/* Background effects */}
-          <div className="absolute w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,rgba(37,211,102,0.2),transparent_65%)] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-50 pointer-events-none" />
-          <div className="absolute top-4 right-4 w-20 h-20 rounded-full bg-[radial-gradient(circle,rgba(37,211,102,0.15),transparent_70%)] pointer-events-none" />
+    <section className="py-16 lg:py-[90px] relative z-10">
+      <div className="max-w-[640px] mx-auto px-6 text-center">
 
-          <div className="relative z-10">
-            <div className="text-center max-w-2xl mx-auto">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-[#062b15] font-bold text-sm mb-6 uppercase tracking-wider">
-                {t.badge}
-              </div>
-
-              {/* Title */}
-              <h2 className="text-3xl lg:text-4xl font-extrabold text-text mb-4 tracking-tight">
-                {t.title}
-              </h2>
-
-              <p className="text-lg text-text-2 mb-8">
-                {t.subtitle}
-              </p>
-
-              {/* Compteur */}
-              <div className="flex items-center justify-center gap-3 mb-8">
-                <div className="flex items-center gap-2 px-4 py-2 bg-glass border border-border rounded-full">
-                  <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                  <span className="text-text-2 text-sm">{t.spotsText}</span>
-                  <span className="text-primary font-bold text-lg">
-                    {spotsData.loading ? '...' : spotsData.spotsLeft}
-                  </span>
-                  <span className="text-text-2 text-sm">/{spotsData.totalSpots} {t.spotsLeft}</span>
-                </div>
-              </div>
-
-              {/* Benefits */}
-              <div className="grid sm:grid-cols-2 gap-3 mb-10 max-w-lg mx-auto">
-                {t.benefits.map((benefit, index) => (
-                  <div key={index} className="text-sm text-text-2 text-left">
-                    {benefit}
-                  </div>
-                ))}
-              </div>
-
-              {/* Form */}
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder={t.emailPlaceholder}
-                  required
-                  className="flex-1 h-12 px-4 rounded-xl bg-surface border border-border-strong text-text placeholder-text-3 focus:outline-none focus:border-primary transition-colors"
-                />
-                <button
-                  type="submit"
-                  disabled={isSubmitting || !email}
-                  className="h-12 px-6 rounded-xl bg-white text-black font-bold transition-all duration-150 hover:bg-gray-100 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shadow-lg border-2 border-gray-300"
-                >
-                  {isSubmitting ? '...' : t.ctaButton}
-                </button>
-              </form>
-
-              {/* Message d'erreur */}
-              {error && (
-                <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
-                  <p className="text-sm text-red-400">❌ {error}</p>
-                </div>
-              )}
-
-              <p className="text-xs text-text-3 mt-4">
-                {t.disclaimer}
-              </p>
-            </div>
-          </div>
+        <div className="text-[12.5px] font-bold tracking-[0.12em] uppercase text-primary mb-[14px]">
+          {t.beta_label}
         </div>
+
+        <h2 className="text-[clamp(28px,3.6vw,44px)] font-extrabold tracking-[-0.03em] leading-[1.1] mb-4 text-text">
+          {t.beta_h}
+        </h2>
+
+        <p className="text-[17px] text-text-2 leading-[1.6] mb-10 max-w-[480px] mx-auto">
+          {t.beta_sub}
+        </p>
+
+        <a
+          href={`https://wa.me/33667271793?text=${encodeURIComponent(t.beta_wa_msg)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-3 h-14 px-8 rounded-[14px] bg-primary text-[#062b15] font-bold text-[17px] transition-transform duration-150 hover:-translate-y-0.5"
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L0 24l6.335-1.502A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.371l-.36-.214-3.733.885.936-3.617-.235-.373A9.818 9.818 0 0112 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.421-4.398 9.818-9.818 9.818z"/>
+          </svg>
+          {t.beta_cta}
+        </a>
+
+        <p className="text-[13px] text-text-3 mt-5">
+          {t.beta_note}
+        </p>
       </div>
     </section>
   );
