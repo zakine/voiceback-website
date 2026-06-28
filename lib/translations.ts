@@ -86,6 +86,27 @@ export interface Translations {
   foot_rights: string;
   foot_latam: string;
 
+  // Comparison
+  cmp_label: string;
+  cmp_h: string;
+  cmp_sub: string;
+  cmp_feature: string;
+  cmp_col1: string;
+  cmp_col2: string;
+  cmp_recommended: string;
+  cmp_f1: string;
+  cmp_f2: string;
+  cmp_f3: string;
+  cmp_f4: string;
+  cmp_f5: string;
+  cmp_f6: string;
+  cmp_f7: string;
+  cmp_f8: string;
+  cmp_f9: string;
+  cmp_yes: string;
+  cmp_partial: string;
+  cmp_no: string;
+
   // Phone
   tab_chats: string;
   tab_calls: string;
@@ -175,6 +196,26 @@ export const translations: Record<Language, Translations> = {
     foot_rights: 'Hecho con',
     foot_latam: 'para LATAM',
 
+    cmp_label: 'Comparativa',
+    cmp_h: '¿Por qué no alcanza con WhatsApp Business?',
+    cmp_sub: 'WhatsApp Business es un buen comienzo. Voiceback es el siguiente nivel.',
+    cmp_feature: 'Función',
+    cmp_col1: 'WA Personal',
+    cmp_col2: 'WA Business',
+    cmp_recommended: 'Recomendado',
+    cmp_yes: 'Sí',
+    cmp_partial: 'Limitado',
+    cmp_no: 'No',
+    cmp_f1: 'Mensajes con clientes por WhatsApp',
+    cmp_f2: 'Perfil de negocio y catálogo',
+    cmp_f3: 'Respuestas automáticas',
+    cmp_f4: 'Asistente IA 24/7',
+    cmp_f5: 'Cobros con enlaces de pago',
+    cmp_f6: 'Catálogo interactivo con botones',
+    cmp_f7: 'Difusión a contactos',
+    cmp_f8: 'Stories para promociones',
+    cmp_f9: 'Tu mismo número de siempre',
+
     tab_chats: 'Chats',
     tab_calls: 'Llamadas',
     tab_contacts: 'Contactos',
@@ -262,6 +303,26 @@ export const translations: Record<Language, Translations> = {
     foot_rights: 'Made with',
     foot_latam: 'for LATAM',
 
+    cmp_label: 'Comparison',
+    cmp_h: 'Why isn\'t WhatsApp Business enough?',
+    cmp_sub: 'WhatsApp Business is a good start. Voiceback is the next level.',
+    cmp_feature: 'Feature',
+    cmp_col1: 'WA Personal',
+    cmp_col2: 'WA Business',
+    cmp_recommended: 'Recommended',
+    cmp_yes: 'Yes',
+    cmp_partial: 'Limited',
+    cmp_no: 'No',
+    cmp_f1: 'Chat with customers on WhatsApp',
+    cmp_f2: 'Business profile and catalog',
+    cmp_f3: 'Automatic replies',
+    cmp_f4: '24/7 AI assistant',
+    cmp_f5: 'Payment link collection',
+    cmp_f6: 'Interactive catalog with buttons',
+    cmp_f7: 'Broadcast to contacts',
+    cmp_f8: 'Stories for promotions',
+    cmp_f9: 'Keep your existing number',
+
     tab_chats: 'Chats',
     tab_calls: 'Calls',
     tab_contacts: 'Contacts',
@@ -348,6 +409,26 @@ export const translations: Record<Language, Translations> = {
     foot_terms: 'Termos',
     foot_rights: 'Feito com',
     foot_latam: 'para a América Latina',
+
+    cmp_label: 'Comparativo',
+    cmp_h: 'Por que o WhatsApp Business não é suficiente?',
+    cmp_sub: 'O WhatsApp Business é um bom começo. A Voiceback é o próximo nível.',
+    cmp_feature: 'Função',
+    cmp_col1: 'WA Pessoal',
+    cmp_col2: 'WA Business',
+    cmp_recommended: 'Recomendado',
+    cmp_yes: 'Sim',
+    cmp_partial: 'Limitado',
+    cmp_no: 'Não',
+    cmp_f1: 'Conversar com clientes pelo WhatsApp',
+    cmp_f2: 'Perfil comercial e catálogo',
+    cmp_f3: 'Respostas automáticas',
+    cmp_f4: 'Assistente IA 24/7',
+    cmp_f5: 'Cobrança com links de pagamento',
+    cmp_f6: 'Catálogo interativo com botões',
+    cmp_f7: 'Transmissão para contatos',
+    cmp_f8: 'Stories para promoções',
+    cmp_f9: 'Mesmo número de sempre',
 
     tab_chats: 'Conversas',
     tab_calls: 'Chamadas',
