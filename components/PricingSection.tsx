@@ -7,25 +7,7 @@ import { useLanguage } from '@/lib/LanguageContext';
 const PricingSection: React.FC = () => {
   const { t } = useLanguage();
 
-  const plans = [
-    {
-      name: t.p1_name,
-      price: '$9',
-      period: ' /mes',
-      features: [t.p1_1, t.p1_2, t.p1_3, t.p1_4],
-      cta: t.p1_cta,
-      featured: false,
-    },
-    {
-      name: t.p2_name,
-      price: '$19',
-      period: ' /mes',
-      tag: t.p2_tag,
-      features: [t.p2_1, t.p2_2, t.p2_3, t.p2_4, t.p2_5],
-      cta: t.p2_cta,
-      featured: true,
-    },
-  ];
+  const features = [t.p2_1, t.p2_2, t.p2_3, t.p2_4, t.p2_5];
 
   return (
     <section id="pricing" className="py-16 lg:py-[90px] relative z-10">
@@ -43,53 +25,46 @@ const PricingSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Pricing cards */}
-        <div className="grid md:grid-cols-2 gap-[18px] max-w-[760px] mx-auto">
-          {plans.map((plan, index) => (
-            <GlassCard
-              key={index}
-              variant={plan.featured ? 'featured-price' : 'price'}
-              hover={false}
+        {/* Single plan card */}
+        <div className="max-w-[480px] mx-auto">
+          <GlassCard variant="featured-price" hover={false}>
+            {/* Plan name */}
+            <div className="text-xl font-bold mb-[6px] text-text">Voiceback</div>
+
+            {/* Price */}
+            <div className="mb-3">
+              <span className="text-[52px] font-extrabold tracking-[-0.03em] text-text">{t.price_amount}</span>
+              <span className="text-base font-medium text-text-2">{t.price_period}</span>
+            </div>
+
+            {/* Trial badge */}
+            <div className="inline-flex items-center gap-[6px] text-xs font-bold text-primary bg-primary-soft px-[10px] py-1 rounded-full mb-6 uppercase tracking-[0.05em]">
+              {t.price_trial}
+            </div>
+
+            {/* Features list */}
+            <ul className="list-none p-0 m-0 mb-[22px] flex flex-col gap-[11px]">
+              {features.map((feature, i) => (
+                <li key={i} className="flex items-start gap-[10px] text-[14.5px] text-text">
+                  <span className="text-primary flex-shrink-0 mt-[1px]">✓</span>
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA button */}
+            <a
+              href="/download"
+              className="inline-flex items-center justify-center w-full h-[54px] px-[26px] text-base font-semibold rounded-xl cursor-pointer border-none font-sans transition-all duration-150 ease-[cubic-bezier(0.22,1,0.36,1)] bg-primary-strong text-white shadow-vb-primary hover:-translate-y-px"
             >
-              {/* Featured tag */}
-              {plan.tag && (
-                <div className="inline-flex items-center gap-[6px] text-xs font-bold text-primary bg-primary-soft px-[10px] py-1 rounded-full mb-4 uppercase tracking-[0.05em]">
-                  {plan.tag}
-                </div>
-              )}
+              {t.p2_cta}
+            </a>
 
-              {/* Plan name */}
-              <div className="text-xl font-bold mb-[6px] text-text">{plan.name}</div>
-
-              {/* Price */}
-              <div className="mb-[22px]">
-                <span className="text-[42px] font-extrabold tracking-[-0.03em] text-text">{plan.price}</span>
-                <span className="text-base font-medium text-text-2">{plan.period}</span>
-              </div>
-
-              {/* Features list */}
-              <ul className="list-none p-0 m-0 mb-[22px] flex flex-col gap-[11px]">
-                {plan.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-start gap-[10px] text-[14.5px] text-text">
-                    <span className="text-primary flex-shrink-0 mt-[1px]">✓</span>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA button */}
-              <a
-                href="/download"
-                className={`inline-flex items-center justify-center w-full h-[54px] px-[26px] text-base font-semibold rounded-xl cursor-pointer border-none font-sans transition-all duration-150 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  plan.featured
-                    ? 'bg-primary-strong text-white shadow-vb-primary hover:-translate-y-px'
-                    : 'bg-surface text-text border border-border-strong hover:border-primary'
-                }`}
-              >
-                {plan.cta}
-              </a>
-            </GlassCard>
-          ))}
+            {/* Sub-CTA */}
+            <p className="text-[12px] text-text-3 text-center mt-3">
+              {t.price_cancel} · {t.price_managed}
+            </p>
+          </GlassCard>
         </div>
       </div>
     </section>

@@ -86,6 +86,13 @@ export interface Translations {
   foot_rights: string;
   foot_latam: string;
 
+  // Pricing extras
+  price_amount: string;
+  price_period: string;
+  price_trial: string;
+  price_cancel: string;
+  price_managed: string;
+
   // Comparison
   cmp_label: string;
   cmp_h: string;
@@ -160,8 +167,13 @@ export const translations: Record<Language, Translations> = {
     tools_h: 'Todo para vender mejor',
 
     price_label: 'Precios',
-    price_h: 'Empieza gratis hoy',
-    price_intro: '5 días de prueba gratuita. Sin tarjeta de crédito. Cancela cuando quieras.',
+    price_h: 'Un precio. Todo incluido.',
+    price_intro: 'Sin contratos. Sin sorpresas. Cancela cuando quieras desde App Store o Google Play.',
+    price_amount: '$29',
+    price_period: '/mes',
+    price_trial: '5 días gratis · Sin tarjeta de crédito',
+    price_cancel: 'Cancela cuando quieras',
+    price_managed: 'Gestionado por App Store y Google Play',
     p1_name: 'Esencial',
     p1_1: 'Tu WhatsApp conectado',
     p1_2: 'Catálogo + mensajes interactivos',
@@ -175,7 +187,7 @@ export const translations: Record<Language, Translations> = {
     p2_3: 'Mensaje de bienvenida + catálogo automático',
     p2_4: 'Stories de WhatsApp para promos',
     p2_5: 'Etiquetas y mini CRM',
-    p2_cta: 'Probar Pro 14 días',
+    p2_cta: 'Empezar 5 días gratis',
 
     cta_h: 'Tu WhatsApp ya puede vender solo',
     cta_p: 'Activa Voiceback en 2 minutos. Sin cambiar de número, sin complicaciones.',
@@ -267,8 +279,13 @@ export const translations: Record<Language, Translations> = {
     tools_h: 'Everything to sell better',
 
     price_label: 'Pricing',
-    price_h: 'Start free today',
-    price_intro: '5-day free trial. No credit card. Cancel anytime.',
+    price_h: 'One price. Everything included.',
+    price_intro: 'No contracts. No surprises. Cancel anytime from App Store or Google Play.',
+    price_amount: '$29',
+    price_period: '/month',
+    price_trial: '5 days free · No credit card',
+    price_cancel: 'Cancel anytime',
+    price_managed: 'Managed by App Store and Google Play',
     p1_name: 'Essential',
     p1_1: 'Your WhatsApp connected',
     p1_2: 'Catalog + interactive messages',
@@ -282,7 +299,7 @@ export const translations: Record<Language, Translations> = {
     p2_3: 'Welcome message + auto catalog',
     p2_4: 'WhatsApp Stories for promos',
     p2_5: 'Labels and mini CRM',
-    p2_cta: 'Try Pro 14 days',
+    p2_cta: 'Start 5 days free',
 
     cta_h: 'Your WhatsApp can already sell on its own',
     cta_p: 'Activate Voiceback in 2 minutes. No number change, no hassle.',
@@ -374,8 +391,13 @@ export const translations: Record<Language, Translations> = {
     tools_h: 'Tudo para vender melhor',
 
     price_label: 'Preços',
-    price_h: 'Comece grátis hoje',
-    price_intro: '5 dias de teste grátis. Sem cartão de crédito. Cancele quando quiser.',
+    price_h: 'Um preço. Tudo incluído.',
+    price_intro: 'Sem contratos. Sem surpresas. Cancele quando quiser pelo App Store ou Google Play.',
+    price_amount: '$29',
+    price_period: '/mês',
+    price_trial: '5 dias grátis · Sem cartão de crédito',
+    price_cancel: 'Cancele quando quiser',
+    price_managed: 'Gerenciado pelo App Store e Google Play',
     p1_name: 'Essencial',
     p1_1: 'Seu WhatsApp conectado',
     p1_2: 'Catálogo + mensagens interativas',
@@ -389,7 +411,7 @@ export const translations: Record<Language, Translations> = {
     p2_3: 'Mensagem de boas-vindas + catálogo automático',
     p2_4: 'Stories do WhatsApp para promos',
     p2_5: 'Etiquetas e mini CRM',
-    p2_cta: 'Testar Pro 14 dias',
+    p2_cta: 'Começar 5 dias grátis',
 
     cta_h: 'Seu WhatsApp já pode vender sozinho',
     cta_p: 'Ative a Voiceback em 2 minutos. Sem trocar de número, sem complicação.',
